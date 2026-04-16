@@ -26,6 +26,7 @@ gem "simple_command"
 
 gem "loaf"
 gem "mysql2"
+gem "minitest", "< 6"
 gem "rubocop"
 gem "rubocop-performance"
 gem "rubocop-rails"

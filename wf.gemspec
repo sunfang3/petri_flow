@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.summary     = "Petri Net Workflow Engine for Ruby."
   spec.description = "Petri Net Workflow Engine for Ruby."
   spec.license     = "MIT"
+  spec.required_ruby_version = ">= 3.2"
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
@@ -25,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "loaf"
   spec.add_dependency "mini_racer"
   spec.add_dependency "pg"
-  spec.add_dependency "rails"
+  spec.add_dependency "rails", ">= 7.2", "< 8.0"
   spec.add_dependency "rgl"
   spec.add_dependency "ruby-graphviz"
   spec.add_dependency "select2-rails-2020"

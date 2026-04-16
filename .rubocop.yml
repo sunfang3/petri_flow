@@ -3,7 +3,7 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 3.2
   Exclude:
     - bin/**/*
     - test/dummy/bin/**/*

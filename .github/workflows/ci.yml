@@ -4,12 +4,15 @@ on: [push, pull_request]
 
 jobs:
   build:
-
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version: ["3.2", "3.3"]
     runs-on: ubuntu-latest
 
     services:
       db:
-        image: postgres:11
+        image: postgres:16
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -22,23 +25,23 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: "2.6"
-    - name: Build and test with Rake
-      env:
-        DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: postgres
-        RAILS_ENV: test
-      run: |
-        sudo apt-get -yqq install libpq-dev
-        sudo apt-get install libmysqlclient-dev
-        sudo apt-get install graphviz
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-        bundle exec rake app:wf
-        bundle exec rails app:db:create && bundle exec rails app:db:migrate  && bundle exec rails test
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -yqq install libpq-dev default-libmysqlclient-dev graphviz
+      - name: Build and test
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+          RAILS_ENV: test
+        run: |
+          bundle exec rake app:wf
+          bundle exec rails app:db:create app:db:migrate test
