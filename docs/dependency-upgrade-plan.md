@@ -65,6 +65,13 @@ Exit criteria:
   - known residual risk list
 - If a phase cannot be validated, stop and record blocker instead of forcing forward.
 
-## 5. Immediate Next Step
+## 5. Progress
 
-Start Phase 1 implementation in this turn.
+- Phase 1: completed (Ruby/CI baseline aligned to current supported versions).
+- Phase 2: completed (Rails upgraded to 7.2 track).
+- Phase 3: completed (removed Bootstrap 4 specific pagination/select2 coupling).
+- Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 3.2.9).
+
+## 6. Immediate Next Step
+
+- Run CI on `upgrade` branch and collect any environment-specific regressions.

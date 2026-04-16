@@ -16,7 +16,6 @@ module Wf
 end
 
 require "bootstrap"
-require "bootstrap4-kaminari-views"
 require "jquery-rails"
 require "kaminari"
 require "simple_command"

@@ -15,9 +15,7 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem "annotate"
 gem "bootstrap", "~> 4.4.1"
-gem "bootstrap4-kaminari-views"
 gem "jquery-rails"
 gem "kaminari"
 gem "pg"
