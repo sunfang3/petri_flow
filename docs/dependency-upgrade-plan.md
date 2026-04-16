@@ -56,6 +56,17 @@ Exit criteria:
 - Test suite green on Rails 8.x.
 - CI and release workflow stable.
 
+### Phase 5: Post-Rails8 Dependency Refresh
+
+- Refresh low-risk direct dependencies to latest compatible releases.
+- Validate on CI-targeted Ruby matrix (`3.2`, `3.3`) with DB migration + test workflow.
+- Capture remaining blocked/high-risk dependencies for later dedicated migration tracks.
+
+Exit criteria:
+- Selected low-risk gems upgraded and locked.
+- `app:db:* + test` passes on Ruby 3.2 and 3.3 locally.
+- Residual blockers are documented with concrete reasons.
+
 ## 4. Execution Rules
 
 - One phase per change set; no cross-phase mixing.
@@ -71,7 +82,8 @@ Exit criteria:
 - Phase 2: completed (Rails upgraded to 7.2 track).
 - Phase 3: completed (removed Bootstrap 4 specific pagination/select2 coupling).
 - Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 3.2.9).
+- Phase 5: completed (low-risk dependency refresh + Ruby 3.2/3.3 matrix validation).
 
 ## 6. Immediate Next Step
 
-- Run CI on `upgrade` branch and collect any environment-specific regressions.
+- Push `upgrade` branch and run GitHub Actions CI to verify Linux environment parity.
