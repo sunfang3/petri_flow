@@ -6,7 +6,7 @@ require "pathname"
 desc "Wf tasks"
 
 task wf: :environment do
-  url = ENV.fetch("WF_LOLA_URL", "https://service-technology.org/files/lola/lola-2.0.tar.gz")
+  url = ENV.fetch("WF_LOLA_URL", "https://theo.informatik.uni-rostock.de/storages/uni-rostock/Alle_IEF/Inf_THEO/images/tools_daten/lola-2.0.tar.gz")
   tmp_dir = Rails.root.join("tmp")
   archive = tmp_dir.join("lola.tar.gz")
   source_root = tmp_dir.join("lola-source")

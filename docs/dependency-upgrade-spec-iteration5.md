@@ -66,3 +66,8 @@ Excluded:
 - Validation passed:
   - Ruby `3.2.9`: `app:db:drop app:db:create app:db:migrate test`, `rake app:wf`
   - Ruby `3.3.9`: `app:db:drop app:db:create app:db:migrate test`, `rake app:wf`
+- LoLA source/mirror verification and runtime check:
+  - Verified URL: `https://theo.informatik.uni-rostock.de/storages/uni-rostock/Alle_IEF/Inf_THEO/images/tools_daten/lola-2.0.tar.gz`
+  - HTTP `200`, archive download and `tar -tzf` listing passed.
+  - End-to-end compile succeeded on macOS with `CXXFLAGS='-std=gnu++98'`.
+  - Post-build usage checks passed on sample net with JSON output (`AGEF`, dead transition, deadlock-before-end formulas).
