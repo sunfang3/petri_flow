@@ -1,6 +1,6 @@
 # Dependency Upgrade Plan
 
-Last updated: 2026-04-17
+Last updated: 2026-04-18
 
 ## 1. Objective
 
@@ -138,7 +138,8 @@ Exit criteria:
 - Phase 7: completed (placeholder tests replaced by executable smoke/behavior baseline).
 - Phase 8: completed (RuboCop toolchain upgraded and compatible with current config).
 - Phase 9: completed (LoLA binary resolution, diagnostics, and docs hardened).
+- Phase 10: completed (high-risk migration research, risk matrix, and rollback strategy documented).
 
 ## 6. Immediate Next Step
 
-- Start Phase 10 by documenting high-risk upgrade tracks and rollback strategy.
+- Mitigate Node20 deprecation warning in CI by moving checkout/runtime path to Node24-compatible mode.
