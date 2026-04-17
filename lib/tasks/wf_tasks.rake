@@ -13,13 +13,9 @@ task wf: :environment do
   prefix = tmp_dir.join("lola-prefix")
   lola_bin = prefix.join("bin/lola")
 
-  if lola_bin.exist?
-    puts "lola already available at #{lola_bin}, skip build."
-    next
-  end
-
-  if system("which lola > /dev/null 2>&1")
-    puts "lola already available in PATH, skip build."
+  resolved_binary = Wf::Lola.resolve_binary
+  if Wf::Lola.binary_available?(resolved_binary)
+    puts "lola already available via #{resolved_binary}, skip build."
     next
   end
 
@@ -73,5 +69,32 @@ task wf: :environment do
     system(lola_bin.to_s, "--help")
   else
     warn "Skip app:wf: lola binary not found after install."
+  end
+end
+
+namespace :wf do
+  namespace :lola do
+    desc "Diagnose LoLA binary resolution and availability"
+    task doctor: :environment do
+      env_bin = ENV["WF_LOLA_BIN"]
+      config_bin = Wf.lola_bin
+      bundled_bin = Wf::Lola.bundled_binary
+      resolved_bin = Wf::Lola.resolve_binary
+
+      puts "WF_LOLA_BIN: #{env_bin.presence || "(not set)"}"
+      puts "Wf.lola_bin: #{config_bin.presence || "(not set)"}"
+      puts "Bundled bin: #{bundled_bin}"
+      puts "Bundled executable: #{File.executable?(bundled_bin)}"
+      puts "Resolved bin: #{resolved_bin}"
+
+      if Wf::Lola.binary_available?(resolved_bin)
+        puts "Status: READY"
+        system(resolved_bin.to_s, "--help")
+      else
+        warn "Status: NOT READY"
+        warn "Hint: run `bundle exec rake app:wf` to build bundled LoLA, or set `WF_LOLA_BIN=/absolute/path/to/lola`."
+        exit(1)
+      end
+    end
   end
 end

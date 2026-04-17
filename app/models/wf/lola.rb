@@ -1,8 +1,41 @@
 # frozen_string_literal: true
 
+require "shellwords"
+
 module Wf
   class Lola
     attr_reader :end_p, :start_p, :workflow
+
+    class << self
+      def configured_binary
+        ENV["WF_LOLA_BIN"].presence || Wf.lola_bin
+      end
+
+      def bundled_binary
+        Rails.root.join("tmp", "lola-prefix", "bin", "lola").to_s
+      end
+
+      def resolve_binary
+        configured = configured_binary
+        return configured.to_s if configured.present?
+
+        bundled = bundled_binary
+        return bundled if File.executable?(bundled)
+
+        "lola"
+      end
+
+      def binary_available?(binary)
+        return false if binary.blank?
+
+        if binary.to_s.include?(File::SEPARATOR)
+          File.executable?(binary.to_s)
+        else
+          system("which", binary.to_s, out: File::NULL, err: File::NULL)
+        end
+      end
+    end
+
     def initialize(workflow)
       @workflow = workflow
       @start_p  = workflow.places.start.first
@@ -45,7 +78,7 @@ module Wf
     end
 
     def generate_lola_file!
-      File.open(lola_path, "w") { |f| f.write(Wf::Lola.new(workflow).to_text) } unless File.exist?(lola_path)
+      File.write(lola_path, to_text) unless File.exist?(lola_path)
     end
 
     def soundness?
@@ -79,10 +112,26 @@ module Wf
       end
 
       def run_cmd(formula, bucket)
-        cmd = %(lola #{lola_path} --markinglimit=1000 --timelimit=1 --formula="#{formula}" --json=#{json_path(bucket)})
-        $stdout.puts cmd
-        system(cmd)
-        JSON.parse(File.read(json_path(bucket)))
+        binary = self.class.resolve_binary
+        result_path = json_path(bucket)
+        File.delete(result_path) if File.exist?(result_path)
+
+        cmd = [
+          binary.to_s,
+          lola_path.to_s,
+          "--markinglimit=1000",
+          "--timelimit=1",
+          "--formula=#{formula}",
+          "--json=#{result_path}"
+        ]
+        $stdout.puts cmd.map { |part| Shellwords.escape(part) }.join(" ")
+
+        success = system(*cmd)
+        unless success && File.exist?(result_path)
+          raise("LoLA command failed with '#{binary}'. Run `bundle exec rake app:wf:lola:doctor` for diagnostics.")
+        end
+
+        JSON.parse(File.read(result_path))
       end
   end
 end

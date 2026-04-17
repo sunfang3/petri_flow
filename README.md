@@ -23,6 +23,7 @@ Workflow engine for Rails.
 * [Workflow Concepts Reference](https://hooopo.gitbook.io/petri-flow/workflow-concepts-reference)
 * [Petri Flow ERD](https://hooopo.gitbook.io/petri-flow/erd)
 * [Developer Doc](https://hooopo.gitbook.io/petri-flow/developer-document)
+* [LoLA Integration Guide](docs/lola-integration.md)
 
 ## Screenshots
 

@@ -137,7 +137,8 @@ Exit criteria:
 - Phase 6: completed (workflow stabilized; Linux matrix runs green on Ruby 3.2/3.3).
 - Phase 7: completed (placeholder tests replaced by executable smoke/behavior baseline).
 - Phase 8: completed (RuboCop toolchain upgraded and compatible with current config).
+- Phase 9: completed (LoLA binary resolution, diagnostics, and docs hardened).
 
 ## 6. Immediate Next Step
 
-- Start Phase 9 by hardening LoLA integration diagnostics and configurable binary path usage.
+- Start Phase 10 by documenting high-risk upgrade tracks and rollback strategy.

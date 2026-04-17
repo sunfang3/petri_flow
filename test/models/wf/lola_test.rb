@@ -7,6 +7,18 @@ require "securerandom"
 
 module Wf
   class LolaTest < ActiveSupport::TestCase
+    test "resolve_binary prefers env override over config" do
+      with_lola_settings(env: "/tmp/lola-from-env", config: "/tmp/lola-from-config") do
+        assert_equal "/tmp/lola-from-env", Wf::Lola.resolve_binary
+      end
+    end
+
+    test "resolve_binary uses config override when env is missing" do
+      with_lola_settings(env: nil, config: "/tmp/lola-from-config") do
+        assert_equal "/tmp/lola-from-config", Wf::Lola.resolve_binary
+      end
+    end
+
     test "to_text renders places and transitions" do
       workflow, transition = build_linear_workflow
       lola = Wf::Lola.new(workflow)
@@ -28,7 +40,7 @@ module Wf
       json_path = lola.json_path(bucket)
       captured_cmd = nil
 
-      stubbed_system = lambda do |cmd|
+      stubbed_system = lambda do |*cmd|
         captured_cmd = cmd
         FileUtils.mkdir_p(json_path.dirname)
         File.write(json_path, JSON.dump({ analysis: { result: true } }))
@@ -41,7 +53,7 @@ module Wf
       end
 
       assert_equal true, result.dig("analysis", "result")
-      assert_includes captured_cmd, "--formula=\"#{formula}\""
+      assert_includes captured_cmd, "--formula=#{formula}"
       assert_includes captured_cmd, "--json=#{json_path}"
     end
 
@@ -52,7 +64,7 @@ module Wf
       formula = "AG NOT FIREABLE (T1)"
       json_path = lola.json_path(bucket)
 
-      stubbed_system = lambda do |_cmd|
+      stubbed_system = lambda do |*_cmd|
         FileUtils.mkdir_p(json_path.dirname)
         File.write(json_path, "{not-json")
         true
@@ -66,6 +78,26 @@ module Wf
     end
 
     private
+
+      def with_lola_settings(env:, config:)
+        old_env = ENV["WF_LOLA_BIN"]
+        old_config = Wf.lola_bin
+
+        if env.nil?
+          ENV.delete("WF_LOLA_BIN")
+        else
+          ENV["WF_LOLA_BIN"] = env
+        end
+        Wf.lola_bin = config
+        yield
+      ensure
+        if old_env.nil?
+          ENV.delete("WF_LOLA_BIN")
+        else
+          ENV["WF_LOLA_BIN"] = old_env
+        end
+        Wf.lola_bin = old_config
+      end
 
       def build_linear_workflow
         workflow = Wf::Workflow.create!(name: "wf-#{SecureRandom.hex(6)}")

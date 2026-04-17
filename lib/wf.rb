@@ -23,6 +23,7 @@ module Wf
     attr_accessor :finish_conditions
 
     attr_accessor :use_lola
+    attr_accessor :lola_bin
   end
 
   self.enable_callbacks          = ["Wf::Callbacks::EnableDefault"]
@@ -40,4 +41,5 @@ module Wf
   self.org_classes               = { group: "::Wf::Group" }
   self.finish_conditions         = ["Wf::MultipleInstances::AllFinish"]
   self.use_lola                  = false
+  self.lola_bin                  = nil
 end
