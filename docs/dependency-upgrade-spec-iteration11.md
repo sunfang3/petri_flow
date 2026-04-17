@@ -39,4 +39,10 @@ Excluded:
 
 ## 5. Execution Results (2026-04-18)
 
-- In progress.
+- Updated `.github/workflows/ci.yml`:
+  - `actions/checkout@v4 -> actions/checkout@v6`
+- Local validation:
+  - YAML parse succeeded (`YAML.load_file`).
+- Remote validation:
+  - GitHub Actions run `24590909579` passed on both Ruby `3.2` and `3.3`.
+  - prior Node20 deprecation warning annotation from `checkout@v4` no longer appears in run summary.

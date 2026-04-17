@@ -142,4 +142,4 @@ Exit criteria:
 
 ## 6. Immediate Next Step
 
-- Mitigate Node20 deprecation warning in CI by moving checkout/runtime path to Node24-compatible mode.
+- Continue Phase 7 hardening by replacing remaining placeholder controller/model tests.
