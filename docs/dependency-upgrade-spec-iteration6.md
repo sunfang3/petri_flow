@@ -56,10 +56,13 @@ Excluded:
   - split LoLA build and DB/test into separate steps
   - injected `WF_LOLA_URL` and `CXXFLAGS` for LoLA build step
   - added job timeout (`30` minutes)
+  - moved OS package installation before `ruby/setup-ruby` (bundler-cache needs native deps early)
+  - added `x86_64-linux` platform into `Gemfile.lock` for GitHub Actions runners
 - Local validation passed:
   - `.github/workflows/ci.yml` YAML parsing succeeded
   - `RAILS_ENV=test bundle exec rake app:wf` passed
   - `RAILS_ENV=test bundle exec rails app:db:create app:db:migrate` passed
   - `RAILS_ENV=test bundle exec rails test` passed
 - Remote matrix verification:
-  - pending run on `upgrade` after push
+  - first push run failed at `Set up Ruby` due lockfile platform mismatch
+  - fix prepared: lockfile platform + CI step ordering; rerun required

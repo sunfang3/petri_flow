@@ -30,15 +30,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -yqq install libpq-dev default-libmysqlclient-dev graphviz
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-      - name: Install OS dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get -yqq install libpq-dev default-libmysqlclient-dev graphviz
       - name: Build LoLA (best effort)
         env:
           WF_LOLA_URL: "https://theo.informatik.uni-rostock.de/storages/uni-rostock/Alle_IEF/Inf_THEO/images/tools_daten/lola-2.0.tar.gz"
