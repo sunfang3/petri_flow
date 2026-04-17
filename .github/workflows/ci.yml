@@ -1,9 +1,13 @@
 name: Testing
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -35,7 +39,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -yqq install libpq-dev default-libmysqlclient-dev graphviz
-      - name: Build and test
+      - name: Build LoLA (best effort)
+        env:
+          WF_LOLA_URL: "https://theo.informatik.uni-rostock.de/storages/uni-rostock/Alle_IEF/Inf_THEO/images/tools_daten/lola-2.0.tar.gz"
+          CXXFLAGS: "-std=gnu++98"
+          RAILS_ENV: test
+        run: |
+          bundle exec rake app:wf
+          if [ -x test/dummy/tmp/lola-prefix/bin/lola ]; then
+            test/dummy/tmp/lola-prefix/bin/lola --version
+          else
+            echo "LoLA binary not installed; continue without blocking CI."
+          fi
+      - name: Prepare DB and run tests
         env:
           DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
           POSTGRES_USER: postgres
@@ -43,5 +59,5 @@ jobs:
           POSTGRES_DB: postgres
           RAILS_ENV: test
         run: |
-          bundle exec rake app:wf
-          bundle exec rails app:db:create app:db:migrate test
+          bundle exec rails app:db:create app:db:migrate
+          bundle exec rails test

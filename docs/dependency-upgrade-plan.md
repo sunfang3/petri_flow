@@ -67,6 +67,57 @@ Exit criteria:
 - `app:db:* + test` passes on Ruby 3.2 and 3.3 locally.
 - Residual blockers are documented with concrete reasons.
 
+### Phase 6: CI Stabilization
+
+- Add manual trigger support and improve CI observability.
+- Split LoLA setup from DB/test execution to isolate failures.
+- Inject explicit LoLA source URL and build flags in workflow.
+
+Exit criteria:
+- CI workflow supports `workflow_dispatch`.
+- Matrix jobs stay deterministic and non-hanging.
+- Linux CI run passes on Ruby 3.2 and 3.3 after workflow changes.
+
+### Phase 7: Test Baseline Rebuild
+
+- Replace commented placeholder tests with real smoke/behavior checks.
+- Add model/controller/integration sanity tests for core workflow paths.
+- Add focused tests around `Wf::Lola` command execution and JSON parsing boundaries.
+
+Exit criteria:
+- Meaningful test count increase (no placeholder-only suite).
+- Core workflow CRUD and state transitions covered by executable tests.
+
+### Phase 8: Mid-Risk Dependency Refresh
+
+- Upgrade lint/tooling dependencies (`rubocop*`) as a compatible set.
+- Reduce warning noise from stale dependency overlaps where feasible.
+- Keep runtime behavior unchanged while modernizing development toolchain.
+
+Exit criteria:
+- Static analysis stack updated and runnable.
+- No new runtime regressions introduced by tooling upgrades.
+
+### Phase 9: LoLA Integration Hardening
+
+- Add explicit config path support for LoLA binary (not only global `PATH`).
+- Provide diagnostic task for LoLA environment readiness.
+- Document Linux/macOS setup differences and fallback behavior.
+
+Exit criteria:
+- App can use LoLA reliably in environments without global install.
+- Clear diagnostics and docs for operational troubleshooting.
+
+### Phase 10: High-Risk Upgrade Research
+
+- Evaluate migration tracks for Bootstrap 5, `mini_racer`/`libv8`, and `rgl`.
+- Identify breakages, rollback points, and sequencing constraints.
+- Produce specs for future dedicated execution phases.
+
+Exit criteria:
+- Written migration proposals with risk matrix and rollback strategy.
+- No accidental high-risk upgrades merged without dedicated phase/spec.
+
 ## 4. Execution Rules
 
 - One phase per change set; no cross-phase mixing.
@@ -83,7 +134,8 @@ Exit criteria:
 - Phase 3: completed (removed Bootstrap 4 specific pagination/select2 coupling).
 - Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 3.2.9).
 - Phase 5: completed (low-risk dependency refresh + Ruby 3.2/3.3 matrix validation).
+- Phase 6: in progress (CI stabilization for reproducible matrix runs).
 
 ## 6. Immediate Next Step
 
-- Push `upgrade` branch and run GitHub Actions CI to verify Linux environment parity.
+- Validate and run updated CI workflow on `upgrade` branch.
