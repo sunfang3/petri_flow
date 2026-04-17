@@ -19,7 +19,7 @@ module Wf
     belongs_to :workflow, touch: true
     has_many :arcs
     has_many :tokens
-    enum place_type: {
+    enum :place_type, {
       start: 0,
       normal: 1,
       end: 2

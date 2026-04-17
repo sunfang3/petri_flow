@@ -24,7 +24,7 @@ module Wf
     has_many :case_assignments
     has_many :parties, through: :case_assignments, source: "party"
 
-    enum state: {
+    enum :state, {
       created: 0,
       active: 1,
       suspended: 2,

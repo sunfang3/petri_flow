@@ -1,6 +1,6 @@
 # Dependency Upgrade Plan
 
-Last updated: 2026-04-16
+Last updated: 2026-04-17
 
 ## 1. Objective
 
@@ -134,8 +134,9 @@ Exit criteria:
 - Phase 3: completed (removed Bootstrap 4 specific pagination/select2 coupling).
 - Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 3.2.9).
 - Phase 5: completed (low-risk dependency refresh + Ruby 3.2/3.3 matrix validation).
-- Phase 6: in progress (CI stabilization for reproducible matrix runs).
+- Phase 6: completed (workflow stabilized; Linux matrix runs green on Ruby 3.2/3.3).
+- Phase 7: completed (placeholder tests replaced by executable smoke/behavior baseline).
 
 ## 6. Immediate Next Step
 
-- Validate and run updated CI workflow on `upgrade` branch.
+- Start Phase 8 by upgrading lint/tooling dependencies as a compatible set.

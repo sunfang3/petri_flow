@@ -41,7 +41,7 @@ module Wf
     belongs_to :dynamic_assign_by, optional: true, class_name: "Wf::Transition"
     has_many :dynamic_assignments, class_name: "Wf::Transition", foreign_key: "dynamic_assign_by_id"
 
-    enum trigger_type: {
+    enum :trigger_type, {
       user: 0,
       automatic: 1,
       message: 2,

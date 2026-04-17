@@ -65,4 +65,6 @@ Excluded:
   - `RAILS_ENV=test bundle exec rails test` passed
 - Remote matrix verification:
   - first push run failed at `Set up Ruby` due lockfile platform mismatch
-  - fix prepared: lockfile platform + CI step ordering; rerun required
+  - fix applied: lockfile platform + CI step ordering
+  - rerun passed on GitHub Actions run `24561648155` for both `ruby 3.2` and `ruby 3.3`
+  - residual note: `actions/checkout@v4` shows Node 20 deprecation warning (future CI maintenance item)

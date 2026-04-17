@@ -19,7 +19,7 @@ module Wf
   class Field < ApplicationRecord
     belongs_to :form, touch: true
 
-    enum field_type: {
+    enum :field_type, {
       string: 0,
       integer: 1,
       boolean: 2,

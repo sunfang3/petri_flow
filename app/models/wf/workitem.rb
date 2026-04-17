@@ -40,7 +40,7 @@ module Wf
 
     has_many :children, foreign_key: :parent_id, class_name: "Wf::Workitem"
 
-    enum state: {
+    enum :state, {
       enabled: 0,
       started: 1,
       canceled: 2,

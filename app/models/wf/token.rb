@@ -27,7 +27,7 @@ module Wf
     belongs_to :place
     belongs_to :locked_workitem, class_name: "Wf::Workitem", optional: true
 
-    enum state: {
+    enum :state, {
       free: 0,
       locked: 1,
       canceled: 2,

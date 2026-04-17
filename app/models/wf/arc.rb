@@ -26,7 +26,7 @@ module Wf
     scope :without_guards, -> { where(guards_count: 0) }
 
     # direction is relative to the transition
-    enum direction: {
+    enum :direction, {
       in: 0,
       out: 1
     }
