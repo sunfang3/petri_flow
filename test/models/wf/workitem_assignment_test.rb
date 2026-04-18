@@ -15,8 +15,13 @@ require "test_helper"
 
 module Wf
   class WorkitemAssignmentTest < ActiveSupport::TestCase
-    # test "the truth" do
-    #   assert true
-    # end
+    test "belongs to workitem and party" do
+      flow = create_case_with_workitem
+      user = create_user
+      assignment = Wf::WorkitemAssignment.create!(workitem: flow[:workitem], party: user.party)
+
+      assert_equal flow[:workitem], assignment.workitem
+      assert_equal user.party, assignment.party
+    end
   end
 end

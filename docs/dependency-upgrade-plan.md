@@ -142,4 +142,5 @@ Exit criteria:
 
 ## 6. Immediate Next Step
 
-- Continue Phase 7 hardening by replacing remaining placeholder controller/model tests.
+- Scope 1~3 is completed (latest validation in `dependency-upgrade-spec-iteration12.md`).
+- Keep item 4 deferred until explicitly resumed.

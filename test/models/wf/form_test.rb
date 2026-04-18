@@ -15,8 +15,13 @@ require "test_helper"
 
 module Wf
   class FormTest < ActiveSupport::TestCase
-    test "the truth" do
-      assert true
+    test "destroy cascades to associated fields" do
+      form = create_form
+      form.fields.create!(name: unique_name("field"), field_type: :string)
+
+      assert_difference("Wf::Field.count", -1) do
+        form.destroy
+      end
     end
   end
 end
