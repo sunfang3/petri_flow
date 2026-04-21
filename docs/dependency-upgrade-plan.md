@@ -1,6 +1,6 @@
 # Dependency Upgrade Plan
 
-Last updated: 2026-04-18
+Last updated: 2026-04-22
 
 ## 1. Objective
 
@@ -9,15 +9,15 @@ Upgrade this Rails engine from the current locked baseline (`Rails 7.0.4`, histo
 ## 2. Constraints
 
 - The repo is a Rails engine with a dummy host app for tests.
-- Frontend stack is tightly coupled to Bootstrap 4 + jQuery + Select2 theme.
-- Several dependencies are stale (`bootstrap4-kaminari-views`, `select2-rails-2020`, `loaf`, `ruby-graphviz`).
+- Frontend stack is currently on Bootstrap 5 + jQuery + Select2 theme.
+- Several dependencies remain legacy (`select2-rails-2020`, `loaf`, `ruby-graphviz`).
 - Avoid one-shot full upgrade; keep each phase independently releasable.
 
 ## 3. Phase Plan
 
 ### Phase 1: Baseline and Toolchain
 
-- Raise runtime/tooling baseline to modern Ruby (>= 3.2).
+- Raise runtime/tooling baseline to modern Ruby (>= 4.0).
 - Upgrade CI workflows to current GitHub Actions patterns.
 - Align static analysis baseline (`.rubocop.yml`) with the new Ruby version.
 - Keep application behavior unchanged.
@@ -59,12 +59,12 @@ Exit criteria:
 ### Phase 5: Post-Rails8 Dependency Refresh
 
 - Refresh low-risk direct dependencies to latest compatible releases.
-- Validate on CI-targeted Ruby matrix (`3.2`, `3.3`) with DB migration + test workflow.
+- Validate on CI-targeted Ruby matrix (`4.0`) with DB migration + test workflow.
 - Capture remaining blocked/high-risk dependencies for later dedicated migration tracks.
 
 Exit criteria:
 - Selected low-risk gems upgraded and locked.
-- `app:db:* + test` passes on Ruby 3.2 and 3.3 locally.
+- `app:db:* + test` passes on Ruby 4.0 locally.
 - Residual blockers are documented with concrete reasons.
 
 ### Phase 6: CI Stabilization
@@ -76,7 +76,7 @@ Exit criteria:
 Exit criteria:
 - CI workflow supports `workflow_dispatch`.
 - Matrix jobs stay deterministic and non-hanging.
-- Linux CI run passes on Ruby 3.2 and 3.3 after workflow changes.
+- Linux CI run passes on Ruby 4.0 after workflow changes.
 
 ### Phase 7: Test Baseline Rebuild
 
@@ -132,9 +132,9 @@ Exit criteria:
 - Phase 1: completed (Ruby/CI baseline aligned to current supported versions).
 - Phase 2: completed (Rails upgraded to 7.2 track).
 - Phase 3: completed (removed Bootstrap 4 specific pagination/select2 coupling).
-- Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 3.2.9).
-- Phase 5: completed (low-risk dependency refresh + Ruby 3.2/3.3 matrix validation).
-- Phase 6: completed (workflow stabilized; Linux matrix runs green on Ruby 3.2/3.3).
+- Phase 4: completed (Rails upgraded to 8.x with validation on Ruby 4.0.1 baseline).
+- Phase 5: completed (dependencies refreshed with Ruby 4.0 compatibility validation).
+- Phase 6: completed (workflow stabilized; Linux matrix now targets Ruby 4.0).
 - Phase 7: completed (placeholder tests replaced by executable smoke/behavior baseline).
 - Phase 8: completed (RuboCop toolchain upgraded and compatible with current config).
 - Phase 9: completed (LoLA binary resolution, diagnostics, and docs hardened).
@@ -142,5 +142,5 @@ Exit criteria:
 
 ## 6. Immediate Next Step
 
-- Scope 1~3 is completed (latest validation in `dependency-upgrade-spec-iteration12.md`).
-- Keep item 4 deferred until explicitly resumed.
+- Ruby 4.0 baseline and high-risk dependency execution are completed (see `dependency-upgrade-spec-iteration13.md`).
+- Next: run remote CI on `upgrade` and address any Bootstrap 5 UI regressions found in browser smoke checks.

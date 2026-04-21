@@ -3,12 +3,13 @@ plugins:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 4.0
   NewCops: disable
   Exclude:
     - bin/**/*
     - test/dummy/bin/**/*
     - test/dummy/db/schema.rb
+    - vendor/**/*
 
 Rails:
   Enabled: true

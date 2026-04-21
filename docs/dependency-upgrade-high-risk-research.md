@@ -2,6 +2,8 @@
 
 Last updated: 2026-04-18
 
+Status: Historical research snapshot (pre-execution). The corresponding execution landed in `dependency-upgrade-spec-iteration13.md`.
+
 ## 1. Current Baseline
 
 - `bootstrap`: `4.4.1`
@@ -119,7 +121,7 @@ Rationale:
 
 ## 6. Go/No-Go Gates Per Track
 
-- green CI matrix (`ruby 3.2`, `3.3`)
+- green CI matrix (`ruby 4.0`)
 - full `rails test` green
 - no increase in unresolved placeholder tests
 - explicit rollback command path documented in each track PR

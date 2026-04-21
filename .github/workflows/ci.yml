@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ["3.2", "3.3"]
+        ruby-version: ["4.0"]
     runs-on: ubuntu-latest
 
     services:
@@ -33,7 +33,7 @@ jobs:
       - name: Install OS dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -yqq install libpq-dev default-libmysqlclient-dev graphviz
+          sudo apt-get -yqq install libpq-dev graphviz
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

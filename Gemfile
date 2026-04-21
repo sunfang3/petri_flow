@@ -2,6 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+ruby ">= 4.0.0"
 
 # Declare your gem's dependencies in wf.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -15,7 +16,8 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem "bootstrap", "~> 4.4.1"
+gem "bootstrap", "~> 5.3"
+gem "sassc-rails"
 gem "jquery-rails"
 gem "kaminari"
 gem "pg"
@@ -23,7 +25,6 @@ gem "pry-rails"
 gem "simple_command"
 
 gem "loaf"
-gem "mysql2"
 gem "minitest", "< 6"
 gem "rubocop"
 gem "rubocop-performance"

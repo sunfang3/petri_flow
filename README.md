@@ -45,6 +45,11 @@ Workflow engine for Rails.
 
 ### 
 ## Installation
+Requirements:
+
+* Ruby `>= 4.0`
+* Rails `>= 8.0`, `< 9.0`
+
 Add this line to your application's Gemfile:
 
 ```ruby
